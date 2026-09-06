@@ -41,6 +41,7 @@ export type Database = {
       products: {
         Row: {
           age_range: string
+          badge: string | null
           color_images: Json | null
           colors: string[] | null
           created_at: string
@@ -55,6 +56,7 @@ export type Database = {
           name: string
           occasion: string | null
           price: number
+          sale_price: number | null
           sizes: string[]
           slug: string
           stock_quantity: number
@@ -63,6 +65,7 @@ export type Database = {
         }
         Insert: {
           age_range: string
+          badge?: string | null
           color_images?: Json | null
           colors?: string[] | null
           created_at?: string
@@ -77,6 +80,7 @@ export type Database = {
           name: string
           occasion?: string | null
           price: number
+          sale_price?: number | null
           sizes?: string[]
           slug: string
           stock_quantity?: number
@@ -85,6 +89,7 @@ export type Database = {
         }
         Update: {
           age_range?: string
+          badge?: string | null
           color_images?: Json | null
           colors?: string[] | null
           created_at?: string
@@ -99,6 +104,7 @@ export type Database = {
           name?: string
           occasion?: string | null
           price?: number
+          sale_price?: number | null
           sizes?: string[]
           slug?: string
           stock_quantity?: number
