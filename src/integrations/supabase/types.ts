@@ -56,6 +56,7 @@ export type Database = {
           occasion: string | null
           price: number
           sizes: string[]
+          slug: string
           stock_quantity: number
           style: string | null
           updated_at: string
@@ -77,6 +78,7 @@ export type Database = {
           occasion?: string | null
           price: number
           sizes?: string[]
+          slug: string
           stock_quantity?: number
           style?: string | null
           updated_at?: string
@@ -98,6 +100,7 @@ export type Database = {
           occasion?: string | null
           price?: number
           sizes?: string[]
+          slug?: string
           stock_quantity?: number
           style?: string | null
           updated_at?: string
