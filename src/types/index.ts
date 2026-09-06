@@ -10,6 +10,8 @@ export interface Product {
   style?: string | null;
   occasion?: string | null;
   price: number;
+  originalPrice?: number;
+  salePrice?: number | null;
   gender: ProductGender;
   age_range: string;
   sizes?: string[] | null;
@@ -19,6 +21,7 @@ export interface Product {
   main_image?: string | null;
   meesho_url?: string | null;
   flipkart_url?: string | null;
+  badge?: "sale" | "sold-out" | "new" | null;
   created_at?: string;
 }
 
