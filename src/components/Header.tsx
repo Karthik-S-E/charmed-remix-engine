@@ -1,6 +1,8 @@
 import { Link, useLocation } from "react-router-dom";
-import { ShoppingCart, Menu, X, Instagram } from "lucide-react";
+import { ShoppingCart, Menu, X, Instagram, User, LogOut, LayoutDashboard } from "lucide-react";
 import { useCart } from "@/context/CartContext";
+import { useAuth } from "@/context/AuthContext";
+import { useBrandSettings } from "@/hooks/useBrandSettings";
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 
@@ -8,11 +10,12 @@ const navLinks = [
   { to: "/shop", label: "Shop" },
   { to: "/about", label: "About" },
   { to: "/contact", label: "Contact" },
-  
 ];
 
 export default function Header() {
   const { totalItems } = useCart();
+  const { user, isAdmin, signOut } = useAuth();
+  const { settings } = useBrandSettings();
   const { pathname } = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -27,6 +30,7 @@ export default function Header() {
   }, []);
 
   const transparent = isHome && !scrolled && !mobileOpen;
+  const storeName = settings?.store_name || "Kandamma Kids";
 
   return (
     <header
@@ -45,7 +49,7 @@ export default function Header() {
             transparent ? "text-white" : "text-foreground"
           )}
         >
-          Terra Studios
+          {storeName}
         </Link>
 
         {/* Desktop nav */}
@@ -71,6 +75,20 @@ export default function Header() {
           <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
             <Instagram className={cn("w-[18px] h-[18px] transition-colors", transparent ? "text-white/80 hover:text-white" : "text-muted-foreground hover:text-foreground")} />
           </a>
+          {isAdmin && (
+            <Link to="/admin" aria-label="Admin dashboard">
+              <LayoutDashboard className={cn("w-[18px] h-[18px] transition-colors", transparent ? "text-white/80 hover:text-white" : "text-muted-foreground hover:text-foreground")} />
+            </Link>
+          )}
+          {user ? (
+            <button onClick={signOut} aria-label="Sign out" className={cn("transition-colors", transparent ? "text-white/80 hover:text-white" : "text-muted-foreground hover:text-foreground")}>
+              <LogOut className="w-[18px] h-[18px]" />
+            </button>
+          ) : (
+            <Link to="/login" aria-label="Sign in">
+              <User className={cn("w-[18px] h-[18px] transition-colors", transparent ? "text-white/80 hover:text-white" : "text-muted-foreground hover:text-foreground")} />
+            </Link>
+          )}
           <Link to="/cart" className="relative" aria-label="Shopping cart">
             <ShoppingCart className={cn("w-[18px] h-[18px] transition-colors", transparent ? "text-white/80 hover:text-white" : "text-muted-foreground hover:text-foreground")} />
             {totalItems > 0 && (
@@ -116,6 +134,20 @@ export default function Header() {
               {link.label}
             </Link>
           ))}
+          {isAdmin && (
+            <Link to="/admin" onClick={() => setMobileOpen(false)} className="block text-sm uppercase tracking-wider text-muted-foreground">
+              Admin
+            </Link>
+          )}
+          {user ? (
+            <button onClick={() => { signOut(); setMobileOpen(false); }} className="block text-sm uppercase tracking-wider text-muted-foreground">
+              Sign Out
+            </button>
+          ) : (
+            <Link to="/login" onClick={() => setMobileOpen(false)} className="block text-sm uppercase tracking-wider text-muted-foreground">
+              Sign In
+            </Link>
+          )}
         </nav>
       )}
     </header>
