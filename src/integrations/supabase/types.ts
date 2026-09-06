@@ -14,16 +14,156 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      brand_settings: {
+        Row: {
+          id: string
+          logo_url: string | null
+          store_name: string
+          tagline: string | null
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          logo_url?: string | null
+          store_name?: string
+          tagline?: string | null
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          logo_url?: string | null
+          store_name?: string
+          tagline?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      products: {
+        Row: {
+          age_range: string
+          color_images: Json | null
+          colors: string[] | null
+          created_at: string
+          description: string | null
+          design_number: string | null
+          flipkart_url: string | null
+          gender: string
+          id: string
+          in_stock: boolean
+          main_image: string | null
+          meesho_url: string | null
+          name: string
+          occasion: string | null
+          price: number
+          sizes: string[]
+          stock_quantity: number
+          style: string | null
+          updated_at: string
+        }
+        Insert: {
+          age_range: string
+          color_images?: Json | null
+          colors?: string[] | null
+          created_at?: string
+          description?: string | null
+          design_number?: string | null
+          flipkart_url?: string | null
+          gender: string
+          id?: string
+          in_stock?: boolean
+          main_image?: string | null
+          meesho_url?: string | null
+          name: string
+          occasion?: string | null
+          price: number
+          sizes?: string[]
+          stock_quantity?: number
+          style?: string | null
+          updated_at?: string
+        }
+        Update: {
+          age_range?: string
+          color_images?: Json | null
+          colors?: string[] | null
+          created_at?: string
+          description?: string | null
+          design_number?: string | null
+          flipkart_url?: string | null
+          gender?: string
+          id?: string
+          in_stock?: boolean
+          main_image?: string | null
+          meesho_url?: string | null
+          name?: string
+          occasion?: string | null
+          price?: number
+          sizes?: string[]
+          stock_quantity?: number
+          style?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          address: string | null
+          created_at: string
+          full_name: string | null
+          id: string
+          phone: string | null
+          updated_at: string
+        }
+        Insert: {
+          address?: string | null
+          created_at?: string
+          full_name?: string | null
+          id: string
+          phone?: string | null
+          updated_at?: string
+        }
+        Update: {
+          address?: string | null
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          phone?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "customer"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +290,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "customer"],
+    },
   },
 } as const
