@@ -1,14 +1,19 @@
 import { Link } from "react-router-dom";
 import { Instagram } from "lucide-react";
+import { useBrandSettings } from "@/hooks/useBrandSettings";
 
 export default function Footer() {
+  const { settings } = useBrandSettings();
+  const storeName = settings?.store_name || "Kandamma Kids";
+  const tagline = settings?.tagline || "Ethnic wear for little ones";
+
   return (
     <footer className="bg-background py-16 px-6">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr] gap-12">
           <div>
-            <h3 className="text-2xl font-light tracking-wide text-foreground mb-3">Terra Studios</h3>
-            <p className="text-sm text-muted-foreground">Handcrafted knitwear, made with care.</p>
+            <h3 className="text-2xl font-light tracking-wide text-foreground mb-3">{storeName}</h3>
+            <p className="text-sm text-muted-foreground">{tagline}</p>
             <div className="flex gap-4 mt-6">
               <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
                 <Instagram className="w-[18px] h-[18px] text-muted-foreground hover:text-foreground transition-colors" />
@@ -21,7 +26,7 @@ export default function Footer() {
           </div>
           <div className="flex flex-col gap-3">
             <Link to="/contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Contact</Link>
-            
+            <Link to="/login" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Account</Link>
           </div>
         </div>
       </div>
