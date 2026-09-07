@@ -37,8 +37,6 @@ const App = () => (
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/product/:slug" element={<ProductDetail />} />
-                <Route path="/collections/core" element={<CoreCollection />} />
-                <Route path="/collections/sets-and-pairs" element={<SetsAndPairs />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/reset-password" element={<ResetPassword />} />
