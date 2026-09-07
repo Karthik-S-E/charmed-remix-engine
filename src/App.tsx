@@ -13,8 +13,6 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Cart from "./pages/Cart";
 import ProductDetail from "./pages/ProductDetail";
-import CoreCollection from "./pages/CoreCollection";
-import SetsAndPairs from "./pages/SetsAndPairs";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -39,8 +37,6 @@ const App = () => (
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/product/:slug" element={<ProductDetail />} />
-                <Route path="/collections/core" element={<CoreCollection />} />
-                <Route path="/collections/sets-and-pairs" element={<SetsAndPairs />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/reset-password" element={<ResetPassword />} />

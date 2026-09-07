@@ -7,18 +7,24 @@ export function useBrandSettings() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    supabase
-      .from("brand_settings")
-      .select("*")
-      .order("updated_at", { ascending: false })
-      .limit(1)
-      .single()
-      .then(({ data, error }) => {
-        if (!error && data) {
-          setSettings(data as unknown as BrandSettings);
-        }
-      })
-      .finally(() => setLoading(false));
+    let active = true;
+
+    (async () => {
+      const { data, error } = await supabase
+        .from("brand_settings")
+        .select("*")
+        .order("updated_at", { ascending: false })
+        .limit(1)
+        .maybeSingle();
+
+      if (!active) return;
+      if (!error && data) setSettings(data as unknown as BrandSettings);
+      setLoading(false);
+    })();
+
+    return () => {
+      active = false;
+    };
   }, []);
 
   return { settings, loading };
