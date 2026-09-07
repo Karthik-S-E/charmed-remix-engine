@@ -76,14 +76,16 @@ export default function Admin() {
     e.preventDefault();
     if (!editing) return;
     const p = editing;
-    if (!p.name || !p.slug || !p.gender || !p.age_range || !p.price) {
-      toast({ title: "Missing fields", description: "Name, slug, gender, age range and price are required.", variant: "destructive" });
+    if (!p.name || !p.gender || !p.age_range || !p.price) {
+      toast({ title: "Missing fields", description: "Name, gender, age range and price are required.", variant: "destructive" });
       return;
     }
+    const slugSource = (p.slug && p.slug.trim()) || p.name;
     const row = {
       id: p.id,
       name: p.name,
-      slug: p.slug.toLowerCase().replace(/\s+/g, "-"),
+      slug: slugSource.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""),
+
       design_number: p.design_number || null,
       colors: p.colors && p.colors.length ? p.colors : null,
       color_images: p.color_images && Object.keys(p.color_images).length ? p.color_images : null,
@@ -161,8 +163,9 @@ export default function Admin() {
                   <Input id="name" value={editing.name || ""} onChange={(e) => updateField("name", e.target.value)} />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="slug">Slug *</Label>
-                  <Input id="slug" value={editing.slug || ""} onChange={(e) => updateField("slug", e.target.value)} />
+                  <Label htmlFor="slug">Slug (optional)</Label>
+                  <Input id="slug" placeholder="auto-generated from name" value={editing.slug || ""} onChange={(e) => updateField("slug", e.target.value)} />
+
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="design_number">Design Number</Label>
