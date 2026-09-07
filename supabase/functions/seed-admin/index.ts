@@ -14,25 +14,18 @@ Deno.serve(async (req) => {
 
   const admin = createClient(SUPABASE_URL, SERVICE_ROLE_KEY);
 
-  // Only allowed while no admin exists (one-time bootstrap).
-  const { count, error: countError } = await admin
-    .from("user_roles")
-    .select("*", { count: "exact", head: true })
-    .eq("role", "admin");
-
-  if (countError) {
-    return new Response(JSON.stringify({ error: countError.message }), {
+  // One-time bootstrap: wipe existing accounts, then create the fixed admin.
+  const { data: existing, error: listError } = await admin.auth.admin.listUsers({ perPage: 1000 });
+  if (listError) {
+    return new Response(JSON.stringify({ error: listError.message }), {
       status: 500,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   }
-
-  if ((count ?? 0) > 0) {
-    return new Response(JSON.stringify({ error: "Admin already exists" }), {
-      status: 409,
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-    });
+  for (const u of existing.users) {
+    await admin.auth.admin.deleteUser(u.id);
   }
+
 
   const { data: created, error: createError } = await admin.auth.admin.createUser({
     email: ADMIN_EMAIL,
